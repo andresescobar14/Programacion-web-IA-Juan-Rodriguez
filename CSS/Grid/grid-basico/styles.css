@@ -1,0 +1,27 @@
+.grid-container {
+    display: grid;
+    /* Grid-template columns sirve para
+        crear las columnas de una grilla
+    */
+    /* grid-template-columns: 50px 50px 50px; */
+    /* grid-template-columns: repeat(3, 50px); */
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    /* Grid-template-rows sirve para crear las filas de una grilla */
+    grid-template-rows: auto;
+
+    /* grid nos sirve para generar espaciados  puede ser general 1 valor
+    
+    y 2 valores, el primero es para arriba y abajo y el segundo es para izquierda y derecha
+    */
+    gap: 10px 50px;
+}
+
+.grid-item.destacado {
+    /* grid-column sirve para especificar en qué columna se coloca un elemento */
+ grid-column: 1 / 3;
+}
+
+.grid-item.large {
+    /* grid-row sirve para especificar en qué fila se coloca un elemento */
+    grid-row: 2 / 4;
+}
