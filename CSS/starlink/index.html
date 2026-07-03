@@ -14,21 +14,41 @@
     />
   </head>
   <body>
-    <header class="padding-standard">
+    <header class="">
       <nav class="row flex-main-space-between flex-secondary-center">
         <div class="row flex-secondary-center gap-standard">
-          <h2>STARLINK</h2>
-          <a href="#">Residencial</a>
-          <a href="#">Itinerante</a>
+          <h2 id="logo">STARLINK</h2>
+          <a class="link-menu" href="#">Residencial</a>
+          <a class="link-menu" href="#">Itinerante</a>
         </div>
         <div class="row flex-secondary-center gap-standard">
           <div class="row flex-secondary-center gap-standard buttons-menu">
             <button class="button-active">Personal</button>
             <button class="transparent button-inactive">Empresa</button>
           </div>
-          <button class="circular-button"><i class="fa-solid fa-bars"></i></button>
+          <button class="circular-button">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
       </nav>
+      <div id="header-content">
+        <div
+          class="col-content flex column flex-secondary-center flex-main-center"
+        >
+          <div id="column-content" class="flex column">
+            <h1>
+              Fast, affordable <br />
+              internet
+            </h1>
+            <p>STARTING AT</p>
+            <h2>$55<span>/mo</span></h2>
+            <div class="flex gap-standard">
+              <button class="button-hightlight">Get Started</button>
+              <button class="button-nohightlight">View Pricing</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
   </body>
 </html>
