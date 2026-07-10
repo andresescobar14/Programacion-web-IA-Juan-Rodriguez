@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      button {
+        border-radius: 20px;
+        background-color: antiquewhite;
+        color: rgb(10, 10, 10);
+        border: rgba(0, 0, 0, 0.627) 1px solid;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 32px;
+        transition: all 0.5s;
+      }
+      /*
+        Pseudo clases
+        Permiten darle estilos a un estado de un elemento HTML
+      */
+      /*
+        Al colocar el mouse encima
+      */
+      button:hover {
+        background-color: brown;
+        color: aliceblue;
+        border: rgba(37, 25, 1, 0.627) 1px solid;
+        font-size: 64px;
+      }
+
+      /*
+        Se activa cuando estas enfocado en un elemento, funciona
+        principalemente con inputs
+      */
+      input:focus {
+        outline: none;
+      }
+
+      /*
+        Cuando haces click al elemento (solo mientras presionas el boton)
+      */
+      a:active {
+        color: blue;
+      }
+
+      /*
+        Un enlace que no has visitado
+      */
+      a:link {
+        color: green;
+      }
+
+      /*
+        Un enlace que has visitado
+      */
+      a:visited {
+        color: red;
+      }
+
+      /*PSEUDO ELEMENTOS*/
+      p::first-letter {
+        color: brown;
+        font-size: 36px;
+      }
+
+      p::first-line {
+        color: cadetblue;
+      }
+
+      p::before {
+        content: "- ";
+        color: cornflowerblue;
+        font-size: 36px;
+      }
+
+      p::after {
+        content: "final";
+      }
+    </style>
+  </head>
+  <body>
+    <button>Hazme click</button>
+    <input type="text" name="" id="" placeholder="escribe algo" />
+    <a href="https://www.google.com" target="_blank">Enlace</a>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse, quis?
+      Voluptatibus earum ullam consequuntur, beatae quod officiis? Nisi aut
+      incidunt laborum, ipsa explicabo nemo, facilis consequatur, labore nam in
+      aperiam. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
+      ut aliquam optio dolores minima voluptatibus, natus animi, minus aliquid
+      deserunt deleniti hic accusantium veritatis illo explicabo tenetur dolorum
+      necessitatibus porro.
+    </p>
+  </body>
+</html>

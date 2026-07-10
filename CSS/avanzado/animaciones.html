@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .cuadro {
+        background-color: rgb(118, 1, 1);
+        width: 100px;
+        height: 100px;
+        position: relative;
+        animation: cambiarFondo 10s infinite;
+        animation-timing-function: ease;
+      }
+
+      @keyframes cambiarFondo {
+        0% {
+          background-color: rgb(118, 1, 1);
+          top: 0;
+          left: 0;
+          border-radius: 140% 100% 30% 300%;
+        }
+        25% {
+          background-color: cadetblue;
+          top: 50px;
+          left: 0;
+          border-radius: 200% 5% 120% 100%;
+        }
+        50% {
+          background-color: rgb(88, 129, 13);
+          top: 50px;
+          left: 50px;
+          border-radius: 50% 80% 200% 80%;
+        }
+        75% {
+          background-color: rgb(75, 38, 155);
+          top: 0;
+          left: 50px;
+          border-radius: 100% 20% 20% 100%;
+        }
+        100% {
+          background-color: rgb(118, 1, 1);
+          top: 0;
+          left: 0;
+          border-radius: 140% 100% 30% 300%;
+        }
+        /*
+          Haz una animacion sobre un parrafo que
+          - Dure 7 segundos
+          - El texto cambie su tamaño y grosor de uno pequeño a una mas grande
+          - la animacion se debe de repetir infinitamente
+        */
+      }
+
+      p:hover {
+        animation: texto 5s infinite;
+        position: relative;
+      }
+
+      @keyframes texto {
+        0% {
+          color: blue;
+          font-size: 20px;
+          font-weight: 100;
+        }
+
+        50% {
+          color: red;
+          font-size: 40px;
+          font-weight: 900;
+        }
+
+        100% {
+          color: blue;
+          font-size: 20px;
+          font-weight: 100;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cuadro"></div>
+    <p>Hola mundo</p>
+  </body>
+</html>
