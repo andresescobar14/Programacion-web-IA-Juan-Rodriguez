@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background-color: rgb(42, 91, 165);
+        color: white;
+        padding: 35px;
+      }
+      section {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 25px;
+      }
+      section > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .movil {
+        display: flex;
+      }
+
+      @media only screen and (min-width: 768px) {
+        section {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .movil {
+          display: none;
+        }
+      }
+
+      /*
+        telefonos con pantallas pequeñas
+        @media only screen and (min-width: 600px) {...}
+
+        telefonos con pantallas mas grandes
+        @media only screen and (min-width: 768px) {...}
+
+        computadoras o laptos
+        @media only screen and (min-width: 992px) {...}
+
+        pantallas 1080
+        @media only screen and (min-width: 1200px) {...}
+      */
+    </style>
+  </head>
+  <body>
+    <section>
+      <div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg"
+          alt=""
+        />
+        <h1>Increible</h1>
+        <p>Esto es un texto</p>
+      </div>
+      <div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg"
+          alt=""
+        />
+        <h1>Increible</h1>
+        <p>Esto es un texto</p>
+      </div>
+      <div class="movil">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg"
+          alt=""
+        />
+        <h1>Increible</h1>
+        <p>Esto es un texto</p>
+      </div>
+    </section>
+  </body>
+</html>

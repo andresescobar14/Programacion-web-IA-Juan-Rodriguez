@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      section {
+        background-color: crimson;
+        padding: 20px;
+        position: relative;
+      }
+
+      .cuadro {
+        width: 100px;
+        height: 100px;
+        background-color: cadetblue;
+        /*
+          absolute: elemento inamovible que no ocupa un espacio fisico en el HTML.
+          relative: elemento que funciona como un elemento HTML normal pero que puede ser movido por medio de las propiedades
+          left, right, bottom, top. Ademas de que puede ser como un punto de ancla para un elemento absolute.
+          fixed: elemento que no ocupa espacio fisico en el HTML y que se queda inamovible en un espacio de la
+          pantalla
+          sticky: elemento que funciona de manera similar a uno fixed, pero que si ocupa espacio en el HTML
+          */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 2;
+      }
+
+      .circulo {
+        border-radius: 100%;
+        width: 100px;
+        height: 100px;
+        background-color: chocolate;
+      }
+
+      .pantalla {
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .rojo {
+        background-color: rgb(153, 0, 0);
+      }
+
+      .gris {
+        background-color: gray;
+      }
+
+      .verde {
+        background-color: rgb(0, 92, 0);
+      }
+
+      .azul {
+        background-color: rgb(0, 0, 144);
+      }
+
+      nav {
+        height: 50px;
+        width: 100%;
+        background-color: darkgoldenrod;
+        position: sticky;
+        top: 0;
+        z-index: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <nav></nav>
+    <section>
+      <div class="cuadro"></div>
+      <div class="circulo"></div>
+    </section>
+    <section class="pantalla rojo"></section>
+    <section class="pantalla gris"></section>
+    <section class="pantalla verde"></section>
+    <section class="pantalla azul"></section>
+  </body>
+</html>
