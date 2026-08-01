@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmatodo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/js/all.min.js"
+      integrity="sha512-BivWm1+PupfLofQ5Ei/fNEC6Oq6IZiGO9WUm2ibWHZ33cj/qTX4zsBW/0SN9Myo4HEmINmr0wjuQE8eDL3rmng=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+      * {
+        font-family: "Roboto", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-[#f8f8f8] min-h-screen">
+    <nav class="flex items-end justify-between gap-8 px-8 py-4 bg-white">
+      <div id="izquierda" class="flex items-center gap-16">
+        <img
+          src="https://www.farmatodo.com.ve/assets/svg/logo-farmatodo-blue.svg"
+          alt="logo"
+          class="h-[35px]"
+        />
+      </div>
+      <div
+        id="centro"
+        class="w-full lg:max-w-[450px] xl:max-w-[700px] hidden lg:flex"
+      >
+        <div
+          class="flex items-center border border-[#428fdf] rounded-full rounded-br-none w-full"
+        >
+          <input
+            class="w-full h-[35px] pl-4 focus:outline-none"
+            type="text"
+            placeholder="Buscar productos..."
+          />
+          <button
+            class="h-[35px] flex justify-center items-center px-4 bg-[#428fdf] text-white cursor-pointer rounded-tr-xl"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+      <div id="derecha" class="flex items-center gap-2 md:gap-4">
+        <div
+          class="hidden md:flex items-center border border-white p-1 px-4 rounded-md text-[10px] font-light bg-[#428fdf] text-white"
+        >
+          <div class="flex items-center pr-4 mr-4 border-r border-white gap-2">
+            <img
+              src="https://www.farmatodo.com.ve/assets/svg/ven-flag.svg"
+              alt="venezuela"
+              class="w-[25px]"
+            />
+            <i class="fa-solid fa-arrow-down text-white"></i>
+          </div>
+          <div
+            class="flex items-center gap-2 font-medium cursor-pointer"
+          >
+            <p>Caracas</p>
+            <i class="fa-solid fa-arrow-down text-white"></i>
+          </div>
+        </div>
+        <div
+          class="p-2 flex lg:hidden justify-center items-center rounded-full bg-[#428fdf] text-white w-[25px] h-[25px] md:w-[35px] md:h-[35px]"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div
+          class="p-2 flex md:hidden justify-center items-center rounded-full bg-[#428fdf] text-white w-[25px] h-[25px] md:w-[35px] md:h-[35px]"
+        >
+          <img
+            src="https://www.farmatodo.com.ve/assets/svg/ven-flag.svg"
+            alt="venezuela"
+            class=""
+          />
+        </div>
+
+        <div
+          class="p-2 flex justify-center items-center rounded-full bg-[#428fdf] text-white w-[25px] h-[25px] md:w-[35px] md:h-[35px]"
+        >
+          <i class="fa-regular fa-user"></i>
+        </div>
+        <div
+          class="p-2 flex justify-center items-center rounded-full bg-[#428fdf] text-white relative w-[25px] h-[25px] md:w-[35px] md:h-[35px]"
+        >
+          <p
+            class="absolute top-[-5px] right-[-5px] bg-red-600 text-xs h-[12px] w-[12px] flex justify-center items-center rounded-full p-2"
+          >
+            1
+          </p>
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+      </div>
+    </nav>
+    <nav
+      class="flex items-center md:justify-center scrollbar-thumb-[#428fdf] scrollbar-track-sky-100 gap-6 py-2 px-8 bg-[#428fdf] overflow-auto"
+    >
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Medicamentos <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Belleza <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Bebidas <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Snacks <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Alimentos <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Bebés <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Hogar <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+      <p
+        class="text-white hover:font-semibold cursor-pointer flex gap-2 items-center"
+      >
+        Mascotas <i class="fa-solid fa-sort-down text-xs font-light"></i>
+      </p>
+    </nav>
+    <section
+      class="flex justify-center items-center text-xs bg-[#011657] text-white font-light tracking-wide px-4 py-2 text-center"
+    >
+      <p>
+        ¡Unidos por Venezuela! Haz click
+        <a href="#" class="font-semibold underline">aquí</a> y dona a las ONG
+      </p>
+    </section>
+    <main class="px-8 md:px-32 flex flex-col gap-4">
+      <section
+        class="h-[40vh] md:h-[60vh] lg:h-[70vh] min-h-[250px] mt-4 relative"
+      >
+        <img
+          src="https://lh3.googleusercontent.com/U3krXNjKCjCYdKGNhSQ1A9eSBAQXHTQFZuwXIrUqpxWj-O1DZOIP4lC4cIo0B3AZwPO3kUwwx4vZiveF9tjs2dST4qft41PKqUlP6P4q0FeNKNg=s950-rw-tr=w-950,q-70"
+          alt=""
+          class="w-full h-[40vh] md:h-[60vh] lg:h-[70vh] min-h-[250px] object-cover rounded-xl"
+        />
+        <i
+          class="fa-solid fa-angle-left absolute top-[50%] left-[10px] font-black text-2xl text-white shadow-2xl"
+        ></i>
+        <i
+          class="fa-solid fa-angle-right absolute top-[50%] right-[10px] font-black text-2xl text-white shadow-2xl"
+        ></i>
+      </section>
+      <section class="flex flex-col py-8">
+        <div class="bg-white flex flex-col p-4 rounded-lg">
+          <div class="flex flex-col gap-2 border-b border-b-gray-600/50">
+            <h2 class="font-bold text-xl text-[#44362b]/90">
+              Te puede interesar
+            </h2>
+            <div class="w-[35%] h-[5px] bg-[#428fdf]"></div>
+          </div>
+          <div
+            class="flex gap-4 overflow-auto scrollbar-thumb-[#428fdf] scrollbar-track-sky-100 p-4"
+          >
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+            <div
+              class="flex flex-col relative w-[200px] shrink-0 cursor-pointer hover:bg-[#428fdf] rounded-md transition-all duration-150"
+            >
+              <img
+                src="https://lh3.googleusercontent.com/vEL8K2CUx1R8yYdilynoHlnM1J-S_uwahbT1RRgJzszy2H81x0QaQgaJZBxHiWuX-wsdxEWr2rdEkEH0LNkBQZk1U_0nX4WY1vBfePJnpwq_pQQ4=s350"
+                alt="helados"
+                class="w-[200px] h-full"
+              />
+              <p
+                class="absolute font-semibold right-0 top-0 bg-yellow-400 h-[40px] w-[40px] flex justify-center items-center rounded-full rounded-tr-none"
+              >
+                20%
+              </p>
+              <p
+                class="absolute left-0 bottom-0 bg-yellow-400 px-4 rounded-tr-lg"
+              >
+                Helados
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>
