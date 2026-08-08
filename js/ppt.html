@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function validarEntrada() {
+        entrada = prompt("Ingresa piedra, papel o tijera").toLowerCase();
+        if (entrada == "piedra" || entrada == "papel" || entrada == "tijera") {
+          return entrada;
+        } else {
+          alert("Datos erroneos, intentalo de nuevo");
+          validarEntrada(entrada);
+        }
+      }
+
+      function ppt() {
+        let jugador1 = validarEntrada();
+        let jugador2 = validarEntrada();
+        if (
+          (jugador1 === "piedra" && jugador2 === "tijeras") ||
+          (jugador1 === "papel" && jugador2 === "piedra") ||
+          (jugador1 === "tijeras" && jugador2 === "papel")
+        ) {
+          return "El jugador 1 gano";
+        } else if (
+          (jugador2 === "piedra" && jugador1 === "tijeras") ||
+          (jugador2 === "papel" && jugador1 === "piedra") ||
+          (jugador2 === "tijeras" && jugador1 === "papel")
+        ) {
+          return "El jugador 2 gano";
+        } else {
+          return "de alguna forma, algo salio mal";
+        }
+      }
+
+      let resultado = ppt();
+      alert(resultado);
+    </script>
+  </body>
+</html>
