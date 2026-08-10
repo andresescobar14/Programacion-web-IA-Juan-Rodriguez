@@ -478,3 +478,119 @@ invetario = {
   Ejercicio
   Crea un programa que imprima de forma organizada el inventario con sus categorias, subcategorias y productos.
 */
+
+for (let categoria in inventario) {
+  console.log('Categoria : ' + categoria);
+  for (let subcategoria in inventario[categoria]) {
+    console.log(' sub-categoria: ' + subcategoria);
+    let lista = inventario[categoria][subcategoria];
+    for (let producto of lista) {
+      console.log('    producto: ' + producto.nombre);
+
+      if (producto.variantes) {
+        for (let variante of producto.variantes) {
+          console.log('       * Variante: ' + variante.nombre);
+          console.log('         precio:' + variante.precio);
+          console.log('         Cantidad: ' + variante.cantidad);
+        }
+      } else {
+        // Si es un producto normal (como la res, el pollo o la mozzarella)
+        console.log('      precio: ' + producto.precio);
+        console.log('      Cantidad : ' + producto.cantidad);
+      }
+    }
+  }
+}
+
+//HOSTING
+/* 
+  El hoisting es un comportamiento de JavaScript en el que las 
+  declaraciones de variables y funciones se mueven a la parte 
+  superior de su contexto de ejecución antes de que se ejecute el código. 
+  Esto significa que puedes usar variables y funciones antes de 
+  declararlas en tu código.
+*/
+//ej
+console.log(miVariable); // undefined
+var miVariable = 10;
+console.log(miVariable); // 10
+
+//METODOS DE STRINGS Y ARRAYS
+"Hola Mundo".length //10
+let prueba = "Hola Mundo";
+console.log(prueba.length); //10
+//Transformar a mayusculas
+console.log(prueba.toUpperCase()); //HOLA MUNDO
+//Transformar a minusculas
+console.log(prueba.toLowerCase()); //hola mundo
+console.log(prueba) //Hola Mundo
+//Obtener el indice de una palabra o caracter
+console.log(prueba.indexOf("Mundo")); //5
+//Obtener el ultimo indice de una palabra o caracter
+console.log(prueba.lastIndexOf("o"));
+//Obtener una parte de un string
+console.log(prueba.slice(0, 4)); //Hola
+//Reemplazar una palabra o caracter
+console.log(prueba.replace("Mundo", "Amigo")); //Hola Amigo
+//Reemplazar todas las palabras o caracteres
+console.log(prueba.replaceAll("o", "a"));
+//Convertir un string en un array
+let prueba2 = "Hola Mundo";
+console.log(prueba2.split(" ")); //["Hola", "Mundo"].length
+//Corregir espacios al inicio y al final de un string
+console.log(prueba2.trim()); //Hola Mundo
+//Cortar un string
+console.log(prueba2.substring(0, 4)); //Hola
+
+//Metodos de arrays
+let array = ["manzana", "banana", "naranja"];
+//Agregar un elemento al final del array
+array.push("pera"); //["manzana", "banana", "naranja", "pera"]
+console.log(array);
+//Agregar un elemento al inicio del array
+array.unshift("kiwi"); //["kiwi", "manzana", "banana", "naranja", "pera"]
+console.log(array);
+array[2] = "sandia"; //["kiwi", "manzana", "sandia", "naranja", "pera"]
+//Eliminar el ultimo elemento del array
+array.pop(); //["kiwi", "manzana", "sandia", "naranja"]
+console.log(array);
+//Eliminar el primer elemento del array
+array.shift(); //["manzana", "sandia", "naranja"]
+console.log(array);
+//Eliminar un elemento en una posicion especifica
+array.splice(1, 1); //["manzana", "naranja"]
+console.log(array);
+//Eliminar un elemento en una posicion especifica y agregar otro
+array.splice(1, 1, "fresa"); //["manzana", "fresa"]
+console.log(array);
+//Saber si un elemento existe en un array
+console.log(array.includes("banana")); //false
+//saber si el elemento es un array
+console.log(Array.isArray(array)); //true
+
+
+//metodos de array avanzados
+//filtrar un array
+let carros = [
+  { marca: "Toyota", modelo: "Corolla", año: 2020 },
+  { marca: "Honda", modelo: "Civic", año: 2019 },
+  { marca: "Ford", modelo: "Mustang", año: 2021 },
+  { marca: "Chevrolet", modelo: "Camaro", año: 2020 }
+];
+
+let carrosFiltrados = carros.filter(function (carro) {
+  return carro.año === 2020;
+});
+console.log(carrosFiltrados); // [{ marca: "Toyota", modelo: "Corolla", año: 2020 }, { marca: "Chevrolet", modelo: "Camaro", año: 2020 }]
+
+//mapear un array
+let carrosMapeados = carros.map(function (carro) {
+  return carro.marca + " " + carro.modelo;
+});
+console.log(carrosMapeados); // ["Toyota Corolla", "Honda Civic", "Ford Mustang", "Chevrolet Camaro"]
+
+//recorrer un array
+carros.forEach(function (carro) {
+  console.log(carro.marca + " " + carro.modelo);
+});
+
