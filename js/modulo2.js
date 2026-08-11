@@ -569,6 +569,28 @@ console.log(array.includes("banana")); //false
 console.log(Array.isArray(array)); //true
 
 
+/*
+  CALLBACKS
+  Es una funcion que se pasa como argumento a otra funcion y se ejecuta dentro de esa funcion.
+*/
+//ejemplo
+function imprimirNombre(nombre, validar) {
+  if (validar(nombre)) {
+    console.log("Hola " + nombre);
+  } else {
+    console.log("No se puede imprimir el nombre");
+  }
+}
+
+function validarNombre(nombre) {
+  nombre = nombre.trim().toLowerCase();
+  return nombre.length > 0 && nombre !== "juan";
+}
+
+imprimirNombre("juan", validarNombre); // No se puede imprimir el nombre
+imprimirNombre("Pedro", validarNombre); // Hola Pedro
+imprimir("Hola", "Pedro");
+
 //metodos de array avanzados
 //filtrar un array
 let carros = [
@@ -585,12 +607,54 @@ console.log(carrosFiltrados); // [{ marca: "Toyota", modelo: "Corolla", año: 20
 
 //mapear un array
 let carrosMapeados = carros.map(function (carro) {
-  return carro.marca + " " + carro.modelo;
+  return `${carro.marca} ${carro.modelo}`;
 });
 console.log(carrosMapeados); // ["Toyota Corolla", "Honda Civic", "Ford Mustang", "Chevrolet Camaro"]
 
 //recorrer un array
 carros.forEach(function (carro) {
-  console.log(carro.marca + " " + carro.modelo);
+  console.log(`${carro.marca} ${carro.modelo}`);
 });
 
+//DOCUMENTACION PROFESIONAL, ARRAY FUNCTIONS
+
+/**
+ * @function sumar
+ * @description Esta función toma dos números como parámetros y devuelve su suma.
+ * @param {number} a - El primer número a sumar.
+ * @param {number} b - El segundo número a sumar.
+ * @returns {number} La suma de los dos números proporcionados.
+ * @author Juan Rodriguez
+ */
+function sumar(a, b) {
+  return a + b;
+}
+
+sumar(5, 10); // 15
+/*
+let variableConFuncion = function (a, b) {
+  return a + b;
+}
+*/
+let variableConFuncion = (a, b) => {
+  return a + b;
+}
+
+/*
+  EJERCICIOS
+
+  1) Crea un programa para jugar piedra papel o tijera, que me permita jugar contra la computadora 
+  debe tener un contador de victorias para cada jugar, ademas debe de mostrar un historial de las ultimas 5 partidas.
+  2) Crea un programa que me permita ingresar un string y me devuelva la cantidad de
+  vocales que tiene el string, la cantidad de palabras que tiene, y la cantidad de caracteres que tiene.
+  3) Crea un programa que me permita ingresar un string y me indique cuantas veces se repite cada palabra.
+  4) Crea un programa que el cual me permita ingresar una palabra y me devuelva la palabra
+  invertida
+  5) Crea un programa que me permita verifica si dos palabras son palindromo, es decir, 
+  que se leen de igual forma de izquierda a derecha o de derecha a izquierda.
+  fecha de entrega: 14/08/26
+*/
+
+//Como generar un numero aleatorio entre 0 y 2
+let numeroAleatorio = Math.floor(Math.random() * 3); //0.2315
+console.log(numeroAleatorio); // 1, 2 o 3
