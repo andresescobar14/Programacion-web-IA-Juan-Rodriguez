@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let ganar = true;
+      let numeroAleatorio = Math.floor(Math.random() * 99) + 1;
+      let intentos = 5;
+      alert("Bienvenido al juego de adivinar un numero");
+      do {
+        do {
+          var numero = prompt("Ingresa un numero entre 1 y 100");
+        } while (isNaN(numero));
+        if (intentos > 0) {
+          if (numero > numeroAleatorio) {
+            intentos--;
+            alert(`ingresa un numero menor, te quedan ${intentos} intentos`);
+          } else if (numero < numeroAleatorio) {
+            intentos--;
+            alert(`ingresa un numero mayor, te quedan ${intentos} intentos`);
+          } else if (numero == numeroAleatorio) {
+            alert("has ganado");
+            ganar = false;
+          }
+        } else {
+          alert("has perdido");
+          ganar = false;
+        }
+      } while (ganar);
+    </script>
+  </body>
+</html>
