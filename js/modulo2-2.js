@@ -8,7 +8,8 @@ let usuario = {
   correo: "hola@hola.com"
 }
 
-//CLASES
+//CLASES3
+
 class Usuario {
   constructor(nombre, edad, usuario, correo) {
     this.nombre = nombre;
@@ -211,6 +212,8 @@ let wolverine = new Personaje("wolverine", 100, 5, 10);
 let john = new Personaje("john wick", 100, 5, 10);
 let terminator = new Personaje("terminator", 100, 5, 10);
 let lara = new Personaje("lara croft", 100, 5, 10);
+
+console.log(batman.nombre)
 
 let juego = new Juego([batman, goku, darth, kratos, wolverine, john, terminator, lara])
 juego.iniciar()

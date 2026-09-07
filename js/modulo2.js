@@ -607,14 +607,14 @@ console.log(carrosFiltrados); // [{ marca: "Toyota", modelo: "Corolla", año: 20
 
 //mapear un array
 let carrosMapeados = carros.map(function (carro) {
-  return `${carro.marca} ${carro.modelo}`;
+  return `${carro.modelo} ${carro.marca}`;
 });
 console.log(carrosMapeados); // ["Toyota Corolla", "Honda Civic", "Ford Mustang", "Chevrolet Camaro"]
 
 //recorrer un array
 carros.forEach(function (carro) {
   console.log(`${carro.marca} ${carro.modelo}`);
-});
+});// Toyota Corolla 
 
 //DOCUMENTACION PROFESIONAL, ARRAY FUNCTIONS
 

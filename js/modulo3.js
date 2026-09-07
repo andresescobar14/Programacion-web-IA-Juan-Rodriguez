@@ -73,7 +73,7 @@ let nuevaPersona = { ...persona, edad: 29 }
 
 const patronNombre = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
 const nombrePrueba = " María José ";
-const patronCedula = /^v-\d{6,8}$/
+const patronCedula = /^v-\d{6,9}$/
 const cedula = "v-12345678"
 
 
