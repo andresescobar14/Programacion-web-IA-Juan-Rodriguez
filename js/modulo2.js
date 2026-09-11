@@ -593,7 +593,7 @@ imprimir("Hola", "Pedro");
 
 //metodos de array avanzados
 //filtrar un array
-let carros = [
+carros = [
   { marca: "Toyota", modelo: "Corolla", año: 2020 },
   { marca: "Honda", modelo: "Civic", año: 2019 },
   { marca: "Ford", modelo: "Mustang", año: 2021 },
