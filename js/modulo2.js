@@ -527,13 +527,13 @@ console.log(prueba) //Hola Mundo
 //Obtener el indice de una palabra o caracter
 console.log(prueba.indexOf("Mundo")); //5
 //Obtener el ultimo indice de una palabra o caracter
-console.log(prueba.lastIndexOf("o"));
+console.log(prueba.lastIndexOf("o")); //7 
 //Obtener una parte de un string
 console.log(prueba.slice(0, 4)); //Hola
 //Reemplazar una palabra o caracter
 console.log(prueba.replace("Mundo", "Amigo")); //Hola Amigo
 //Reemplazar todas las palabras o caracteres
-console.log(prueba.replaceAll("o", "a"));
+console.log(prueba.replaceAll("o", "a")); //Hala Munda
 //Convertir un string en un array
 let prueba2 = "Hola Mundo";
 console.log(prueba2.split(" ")); //["Hola", "Mundo"].length
@@ -616,6 +616,7 @@ carros.forEach(function (carro) {
   console.log(`${carro.marca} ${carro.modelo}`);
 });// Toyota Corolla 
 
+<<<<<<< Updated upstream
 //DOCUMENTACION PROFESIONAL, ARRAY FUNCTIONS
 
 /**
@@ -658,3 +659,9 @@ let variableConFuncion = (a, b) => {
 //Como generar un numero aleatorio entre 0 y 2
 let numeroAleatorio = Math.floor(Math.random() * 3); //0.2315
 console.log(numeroAleatorio); // 1, 2 o 3
+=======
+
+
+let variable = "Andres Escobar"
+console.log(variable.toUpperCase());
+>>>>>>> Stashed changes
