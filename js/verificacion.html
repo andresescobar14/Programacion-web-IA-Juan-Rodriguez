@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      if (!sessionStorage.getItem("user")) {
+        window.location.href("./login.html");
+      }
+
+      //Ejemplo de encriptación de contraseña
+      let masterPassword = "naranja.";
+      let userPassword = "Hola1234";
+      let encryptedPassword = bcrypt.hashSync(userPassword, 10); // Encriptar la contraseña del usuario
+      let encryptedMD5Password = md5(userPassword); // Encriptar la contraseña del usuario con MD5
+
+      //desencriptar la contraseña para verificarla
+      let isPasswordCorrect = bcrypt.compareSync(
+        userPassword,
+        encryptedPassword,
+      ); // Verificar la contraseña ingresada por el usuario con la contraseña encriptada
+      let isMD5PasswordCorrect = md5(userPassword) === encryptedMD5Password; // Verificar la contraseña ingresada por el usuario con la contraseña encriptada con MD5
+    </script>
+  </head>
+  <body></body>
+</html>
+
+let masterPassword = "naranja."; let userPassword = "Hola1234" let
+encryptedPassword = "ASDfgkg4154234235." //

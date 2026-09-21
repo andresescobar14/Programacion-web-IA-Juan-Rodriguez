@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transcripción de Audio</title>
+  </head>
+  <body>
+    <!-- Botón para iniciar -->
+    <button id="btn-iniciar">Empezar a hablar</button>
+    
+    <!-- Lugar para mostrar el texto -->
+    <p id="texto-resultado"></p>
+
+    <script>
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
+      // Seleccionar los elementos del HTML
+      const boton = document.getElementById("btn-iniciar");
+      const textoResultado = document.getElementById("texto-resultado");
+
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "es-ES"; // Configurar idioma
+        recognition.continuous = false; // Detenerse cuando el usuario deje de hablar
+        
+        recognition.onresult = (event) => {
+          const textoDetectado = event.results[0][0].transcript;
+          console.log("El usuario dijo:", textoDetectado);
+          // Mostrar el texto en la pantalla
+          textoResultado.textContent = textoDetectado; 
+        };
+
+        // Agregar el evento al botón
+        boton.addEventListener("click", () => {
+          textoResultado.textContent = "Escuchando..."; // Mensaje visual de estado
+          recognition.start(); // Iniciar la escucha del micrófono
+        });
+
+      } else {
+        console.log("El navegador no soporta Speech Recognition.");
+        boton.disabled = true;
+        textoResultado.textContent = "Tu navegador no soporta esta función.";
+      }
+    </script>
+  </body>
+</html>
