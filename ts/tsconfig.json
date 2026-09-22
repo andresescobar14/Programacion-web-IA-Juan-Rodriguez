@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    /* Proyectos */
+    "target": "es2016",                                  /* Especifica la versión del lenguaje JavaScript de salida. */
+    "module": "commonjs",                                /* Especifica qué código de módulos se genera. */
+    "esModuleInterop": true,                             /* Emite JavaScript adicional para facilitar el soporte de importación de módulos CommonJS. */
+    "forceConsistentCasingInFileNames": true,            /* Asegura que el uso de mayúsculas y minúsculas sea correcto en las importaciones. */
+
+    /* Comprobación de tipos */
+    "strict": true,                                      /* Activa todas las opciones estrictas de comprobación de tipos. */
+    "skipLibCheck": true                                 /* Omite la comprobación de tipos de los archivos de declaración (*.d.ts). */
+  }
+}
