@@ -616,7 +616,6 @@ carros.forEach(function (carro) {
   console.log(`${carro.marca} ${carro.modelo}`);
 });// Toyota Corolla 
 
-<<<<<<< Updated upstream
 //DOCUMENTACION PROFESIONAL, ARRAY FUNCTIONS
 
 /**
@@ -659,9 +658,3 @@ let variableConFuncion = (a, b) => {
 //Como generar un numero aleatorio entre 0 y 2
 let numeroAleatorio = Math.floor(Math.random() * 3); //0.2315
 console.log(numeroAleatorio); // 1, 2 o 3
-=======
-
-
-let variable = "Andres Escobar"
-console.log(variable.toUpperCase());
->>>>>>> Stashed changes

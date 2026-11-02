@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tres en Línea - POO & Tailwind CSS</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              x: '#06b6d4',      // Cyan
+              o: '#f43f5e',      // Rose
+              dark: '#0f172a',
+              card: '#1e293b'
+            }
+          },
+          animation: {
+            'pop-in': 'popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+            'win-pulse': 'winPulse 1.2s infinite'
+          },
+          keyframes: {
+            popIn: {
+              '0%': { transform: 'scale(0.4)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            },
+            winPulse: {
+              '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 15px rgba(56, 189, 248, 0.5)' },
+              '50%': { transform: 'scale(1.04)', boxShadow: '0 0 30px rgba(56, 189, 248, 0.9)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Efecto visual suave de fondo y estilos complementarios */
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 60%, #030712 100%);
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .cell-glow-x {
+      box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.25);
+    }
+    .cell-glow-o {
+      box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.25);
+    }
+  </style>
+</head>
+<body class="text-slate-100 flex flex-col items-center justify-center p-4 select-none relative overflow-x-hidden">
+
+  <!-- Canvas para partículas de confeti en victoria -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+  <main class="w-full max-w-md mx-auto flex flex-col items-center gap-5 z-10">
+
+    <!-- Encabezado -->
+    <header class="text-center space-y-1">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs tracking-wider uppercase font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        Modo IA & 2 Jugadores
+      </div>
+      <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-indigo-300 to-rose-400 bg-clip-text text-transparent">
+        Tres en Raya
+      </h1>
+      <p class="text-xs text-slate-400">Desarrollado con Arquitectura POO y Tailwind CSS</p>
+    </header>
+
+    <!-- Panel de Configuración: Modo y Dificultad -->
+    <section class="glass-panel w-full rounded-2xl p-4 shadow-xl space-y-3">
+      <!-- Selector de Modo de Juego -->
+      <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-700/60">
+        <button id="btn-mode-ai" class="py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow-md flex items-center justify-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          vs IA (Bot)
+        </button>
+        <button id="btn-mode-pvp" class="py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          2 Jugadores
+        </button>
+      </div>
+
+      <!-- Selector de Dificultad IA -->
+      <div id="difficulty-wrapper" class="flex items-center justify-between text-xs pt-1">
+        <span class="text-slate-400 font-medium">Nivel de IA:</span>
+        <div class="flex gap-1">
+          <button data-diff="easy" class="btn-diff px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white transition">Fácil</button>
+          <button data-diff="medium" class="btn-diff px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white transition">Normal</button>
+          <button data-diff="hard" class="btn-diff px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-600/90 text-white shadow transition">Imbatible</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marcador de Puntos -->
+    <section class="glass-panel w-full rounded-2xl p-3 shadow-xl grid grid-cols-3 gap-2 text-center">
+      <div class="bg-cyan-950/40 border border-cyan-500/20 rounded-xl p-2.5 transition">
+        <div class="text-xs text-cyan-400 font-bold uppercase tracking-wide flex items-center justify-center gap-1">
+          <span>X</span> <span id="label-player-x" class="font-normal opacity-80">(Tú)</span>
+        </div>
+        <div id="score-x" class="text-2xl font-black text-cyan-300 mt-0.5">0</div>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/40 rounded-xl p-2.5 transition">
+        <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Empates</div>
+        <div id="score-draw" class="text-2xl font-black text-slate-300 mt-0.5">0</div>
+      </div>
+      <div class="bg-rose-950/40 border border-rose-500/20 rounded-xl p-2.5 transition">
+        <div class="text-xs text-rose-400 font-bold uppercase tracking-wide flex items-center justify-center gap-1">
+          <span>O</span> <span id="label-player-o" class="font-normal opacity-80">(IA)</span>
+        </div>
+        <div id="score-o" class="text-2xl font-black text-rose-300 mt-0.5">0</div>
+      </div>
+    </section>
+
+    <!-- Barra de Turno / Estado -->
+    <div id="status-bar" class="w-full glass-panel py-2.5 px-4 rounded-xl flex items-center justify-between text-sm shadow">
+      <div class="flex items-center gap-2">
+        <span class="text-slate-400 text-xs uppercase font-medium">Turno:</span>
+        <span id="turn-badge" class="font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+          JUGADOR X
+        </span>
+      </div>
+      <span id="status-message" class="text-xs text-slate-300 font-medium">¡Haz tu jugada!</span>
+    </div>
+
+    <!-- Tablero de Juego (Grid 3x3) -->
+    <section class="glass-panel w-full p-4 rounded-3xl shadow-2xl relative">
+      <div id="board" class="grid grid-cols-3 gap-3 aspect-square w-full">
+        <!-- 9 Celdas generadas con JS POO -->
+      </div>
+    </section>
+
+    <!-- Controles de partida -->
+    <footer class="w-full flex items-center justify-between gap-3 text-xs">
+      <button id="btn-sound-toggle" class="glass-panel px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition flex items-center gap-1.5 shadow" title="Activar/Desactivar Sonido">
+        <svg id="icon-sound-on" class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+        </svg>
+        <span id="sound-label">Audio ON</span>
+      </button>
+
+      <div class="flex gap-2">
+        <button id="btn-reset-scores" class="glass-panel px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-rose-300 hover:bg-rose-950/30 transition flex items-center gap-1.5 shadow">
+          Reiniciar Puntos
+        </button>
+        <button id="btn-restart-round" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 font-bold text-white transition flex items-center gap-1.5 shadow-lg shadow-indigo-900/40">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Nueva Ronda
+        </button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- LÓGICA DEL JUEGO CON JAVASCRIPT POO (OOP)  -->
+  <!-- ========================================== -->
+  <script>
+    /**
+     * CLASE 1: SoundManager
+     * Encargada del audio sintetizado con la Web Audio API (efectos de sonido limpios sin librerías externas)
+     */
+    class SoundManager {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      initContext() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+      }
+
+      toggle() {
+        this.enabled = !this.enabled;
+        return this.enabled;
+      }
+
+      playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.15) {
+        if (!this.enabled) return;
+        this.initContext();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+          // Audio puede estar bloqueado hasta interacción de usuario
+        }
+      }
+
+      playMove(isX = true) {
+        this.playTone(isX ? 520 : 380, 'sine', 0.12, 0.18);
+      }
+
+      playWin() {
+        if (!this.enabled) return;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+          setTimeout(() => this.playTone(freq, 'triangle', 0.25, 0.2), i * 110);
+        });
+      }
+
+      playDraw() {
+        if (!this.enabled) return;
+        [400, 360, 320].forEach((freq, i) => {
+          setTimeout(() => this.playTone(freq, 'sawtooth', 0.15, 0.1), i * 120);
+        });
+      }
+    }
+
+    /**
+     * CLASE 2: ConfettiEffect
+     * Sistema de partículas para celebrar victorias sin librerías pesadas
+     */
+    class ConfettiEffect {
+      constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.animId = null;
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      launch() {
+        this.particles = [];
+        const colors = ['#06b6d4', '#f43f5e', '#38bdf8', '#fb7185', '#a855f7', '#facc15'];
+        for (let i = 0; i < 90; i++) {
+          this.particles.push({
+            x: this.canvas.width / 2,
+            y: this.canvas.height / 2,
+            vx: (Math.random() - 0.5) * 16,
+            vy: (Math.random() - 0.8) * 16,
+            size: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 10,
+            opacity: 1
+          });
+        }
+        if (this.animId) cancelAnimationFrame(this.animId);
+        this.animate();
+      }
+
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let activeCount = 0;
+
+        this.particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35; // Gravedad
+          p.rotation += p.vRot;
+          p.opacity -= 0.012;
+
+          if (p.opacity > 0) {
+            activeCount++;
+            this.ctx.save();
+            this.ctx.translate(p.x, p.y);
+            this.ctx.rotate((p.rotation * Math.PI) / 180);
+            this.ctx.fillStyle = p.color;
+            this.ctx.globalAlpha = Math.max(p.opacity, 0);
+            this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            this.ctx.restore();
+          }
+        });
+
+        if (activeCount > 0) {
+          this.animId = requestAnimationFrame(() => this.animate());
+        } else {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.animId = null;
+        }
+      }
+    }
+
+    /**
+     * CLASE 3: Board
+     * Modela la matriz del tablero, validaciones de jugadas y combinaciones ganadoras
+     */
+    class Board {
+      constructor() {
+        this.cells = Array(9).fill(null);
+        this.winningCombinations = [
+          [0, 1, 2], [3, 4, 5], [6, 7, 8], // Filas
+          [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columnas
+          [0, 4, 8], [2, 4, 6]             // Diagonales
+        ];
+      }
+
+      reset() {
+        this.cells.fill(null);
+      }
+
+      isValidMove(index) {
+        return index >= 0 && index < 9 && this.cells[index] === null;
+      }
+
+      setMove(index, symbol) {
+        if (this.isValidMove(index)) {
+          this.cells[index] = symbol;
+          return true;
+        }
+        return false;
+      }
+
+      clearMove(index) {
+        this.cells[index] = null;
+      }
+
+      getAvailableIndices() {
+        const moves = [];
+        this.cells.forEach((cell, i) => {
+          if (cell === null) moves.push(i);
+        });
+        return moves;
+      }
+
+      checkWinner() {
+        for (const combo of this.winningCombinations) {
+          const [a, b, c] = combo;
+          if (this.cells[a] && this.cells[a] === this.cells[b] && this.cells[a] === this.cells[c]) {
+            return { winner: this.cells[a], combo: combo };
+          }
+        }
+        if (!this.cells.includes(null)) {
+          return { winner: 'DRAW', combo: [] };
+        }
+        return null;
+      }
+    }
+
+    /**
+     * CLASE 4: AIPlayer
+     * Implementa la inteligencia artificial con 3 dificultades:
+     * - Fácil: Movimientos aleatorios.
+     * - Normal: Bloquea victorias o gana si puede, de lo contrario aleatorio.
+     * - Imbatible: Algoritmo Minimax exhaustivo con función de evaluación óptima.
+     */
+    class AIPlayer {
+      constructor(symbol = 'O', opponentSymbol = 'X') {
+        this.symbol = symbol;
+        this.opponent = opponentSymbol;
+        this.difficulty = 'hard'; // 'easy' | 'medium' | 'hard'
+      }
+
+      setDifficulty(level) {
+        this.difficulty = level;
+      }
+
+      computeMove(board) {
+        const available = board.getAvailableIndices();
+        if (available.length === 0) return null;
+
+        if (this.difficulty === 'easy') {
+          return this.getRandomMove(available);
+        } else if (this.difficulty === 'medium') {
+          return this.getMediumMove(board, available);
+        } else {
+          return this.getMinimaxBestMove(board);
+        }
+      }
+
+      getRandomMove(available) {
+        const randomIndex = Math.floor(Math.random() * available.length);
+        return available[randomIndex];
+      }
+
+      getMediumMove(board, available) {
+        // 1. ¿Puede la IA ganar en este turno?
+        for (const idx of available) {
+          board.setMove(idx, this.symbol);
+          const win = board.checkWinner();
+          board.clearMove(idx);
+          if (win && win.winner === this.symbol) return idx;
+        }
+
+        // 2. ¿Puede el rival ganar? ¡Bloquearlo!
+        for (const idx of available) {
+          board.setMove(idx, this.opponent);
+          const win = board.checkWinner();
+          board.clearMove(idx);
+          if (win && win.winner === this.opponent) return idx;
+        }
+
+        // 3. Tomar el centro si está libre
+        if (available.includes(4)) return 4;
+
+        // 4. Caso contrario, aleatorio
+        return this.getRandomMove(available);
+      }
+
+      getMinimaxBestMove(board) {
+        // Si el tablero está vacío al inicio, una esquina o centro es óptimo y rápido
+        const available = board.getAvailableIndices();
+        if (available.length === 9) {
+          const firstMoves = [0, 2, 4, 6, 8];
+          return firstMoves[Math.floor(Math.random() * firstMoves.length)];
+        }
+
+        let bestScore = -Infinity;
+        let bestMove = available[0];
+
+        for (const index of available) {
+          board.setMove(index, this.symbol);
+          const score = this.minimax(board, 0, false);
+          board.clearMove(index);
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestMove = index;
+          }
+        }
+        return bestMove;
+      }
+
+      minimax(board, depth, isMaximizing) {
+        const result = board.checkWinner();
+        if (result) {
+          if (result.winner === this.symbol) return 10 - depth;
+          if (result.winner === this.opponent) return depth - 10;
+          if (result.winner === 'DRAW') return 0;
+        }
+
+        const available = board.getAvailableIndices();
+
+        if (isMaximizing) {
+          let maxEval = -Infinity;
+          for (const idx of available) {
+            board.setMove(idx, this.symbol);
+            const score = this.minimax(board, depth + 1, false);
+            board.clearMove(idx);
+            maxEval = Math.max(maxEval, score);
+          }
+          return maxEval;
+        } else {
+          let minEval = Infinity;
+          for (const idx of available) {
+            board.setMove(idx, this.opponent);
+            const score = this.minimax(board, depth + 1, true);
+            board.clearMove(idx);
+            minEval = Math.min(minEval, score);
+          }
+          return minEval;
+        }
+      }
+    }
+
+    /**
+     * CLASE 5: UIController
+     * Modela toda la presentación visual del DOM, efectos de clase Tailwind y renderizado
+     */
+    class UIController {
+      constructor(onCellClick) {
+        this.onCellClick = onCellClick;
+        this.boardElement = document.getElementById('board');
+        this.statusBar = document.getElementById('status-bar');
+        this.statusMessage = document.getElementById('status-message');
+        this.turnBadge = document.getElementById('turn-badge');
+        this.scoreX = document.getElementById('score-x');
+        this.scoreO = document.getElementById('score-o');
+        this.scoreDraw = document.getElementById('score-draw');
+        this.labelPlayerO = document.getElementById('label-player-o');
+        this.diffWrapper = document.getElementById('difficulty-wrapper');
+        this.diffButtons = document.querySelectorAll('.btn-diff');
+        this.btnSound = document.getElementById('btn-sound-toggle');
+        this.soundLabel = document.getElementById('sound-label');
+        this.soundIcon = document.getElementById('icon-sound-on');
+
+        this.cellButtons = [];
+        this.buildBoard();
+      }
+
+      buildBoard() {
+        this.boardElement.innerHTML = '';
+        this.cellButtons = [];
+
+        for (let i = 0; i < 9; i++) {
+          const btn = document.createElement('button');
+          btn.className = `
+            relative bg-slate-800/80 hover:bg-slate-700/80 active:scale-95
+            border border-slate-700/60 rounded-2xl flex items-center justify-center
+            text-4xl md:text-5xl font-black transition-all duration-200
+            shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-400/50
+          `.trim();
+          btn.dataset.index = i;
+          btn.addEventListener('click', () => this.onCellClick(i));
+
+          this.boardElement.appendChild(btn);
+          this.cellButtons.push(btn);
+        }
+      }
+
+      renderBoard(boardState) {
+        boardState.forEach((val, i) => {
+          const btn = this.cellButtons[i];
+          if (val === 'X') {
+            btn.innerHTML = `
+              <span class="text-cyan-400 animate-pop-in drop-shadow-[0_0_12px_rgba(6,182,212,0.8)]">
+                ✕
+              </span>`;
+            btn.classList.add('cell-glow-x');
+          } else if (val === 'O') {
+            btn.innerHTML = `
+              <span class="text-rose-400 animate-pop-in drop-shadow-[0_0_12px_rgba(244,63,94,0.8)]">
+                ◯
+              </span>`;
+            btn.classList.add('cell-glow-o');
+          } else {
+            btn.innerHTML = '';
+            btn.className = `
+              relative bg-slate-800/80 hover:bg-slate-700/80 active:scale-95
+              border border-slate-700/60 rounded-2xl flex items-center justify-center
+              text-4xl md:text-5xl font-black transition-all duration-200
+              shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-400/50
+            `.trim();
+          }
+        });
+      }
+
+      highlightWinningCells(combo) {
+        combo.forEach(idx => {
+          const btn = this.cellButtons[idx];
+          btn.classList.add('animate-win-pulse', 'border-emerald-400', 'bg-emerald-950/60');
+        });
+      }
+
+      updateTurn(currentTurn, isAIMode, isThinking = false) {
+        if (isThinking) {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-rose-500/20 text-rose-300 border border-rose-400/30';
+          this.turnBadge.textContent = 'IA PENSANDO...';
+          this.statusMessage.textContent = 'Calculando mejor jugada';
+          return;
+        }
+
+        if (currentTurn === 'X') {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30';
+          this.turnBadge.textContent = 'TURNO DE X';
+          this.statusMessage.textContent = isAIMode ? 'Es tu turno' : 'Turno del Jugador 1';
+        } else {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-rose-500/20 text-rose-300 border border-rose-400/30';
+          this.turnBadge.textContent = 'TURNO DE O';
+          this.statusMessage.textContent = isAIMode ? 'Turno de la IA' : 'Turno del Jugador 2';
+        }
+      }
+
+      updateScores(scores) {
+        this.scoreX.textContent = scores.X;
+        this.scoreO.textContent = scores.O;
+        this.scoreDraw.textContent = scores.draw;
+      }
+
+      showGameOverMessage(result, isAIMode) {
+        if (result.winner === 'DRAW') {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30';
+          this.turnBadge.textContent = 'EMPATE';
+          this.statusMessage.textContent = '¡Partida muy reñida!';
+        } else if (result.winner === 'X') {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
+          this.turnBadge.textContent = '¡GANÓ X!';
+          this.statusMessage.textContent = isAIMode ? '¡Felicidades, ganaste!' : '¡Victoria para Jugador 1!';
+        } else {
+          this.turnBadge.className = 'font-extrabold px-2.5 py-0.5 rounded-full text-xs tracking-wider bg-rose-500/20 text-rose-300 border border-rose-400/30';
+          this.turnBadge.textContent = '¡GANÓ O!';
+          this.statusMessage.textContent = isAIMode ? 'La IA ha ganado esta vez' : '¡Victoria para Jugador 2!';
+        }
+      }
+
+      setModeUI(isAIMode) {
+        const btnAI = document.getElementById('btn-mode-ai');
+        const btnPVP = document.getElementById('btn-mode-pvp');
+
+        if (isAIMode) {
+          btnAI.className = 'py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow-md flex items-center justify-center gap-1.5';
+          btnPVP.className = 'py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 text-slate-400 hover:text-white flex items-center justify-center gap-1.5';
+          this.labelPlayerO.textContent = '(IA)';
+          this.diffWrapper.classList.remove('hidden');
+        } else {
+          btnPVP.className = 'py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 bg-indigo-600 text-white shadow-md flex items-center justify-center gap-1.5';
+          btnAI.className = 'py-2 px-3 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 text-slate-400 hover:text-white flex items-center justify-center gap-1.5';
+          this.labelPlayerO.textContent = '(J2)';
+          this.diffWrapper.classList.add('hidden');
+        }
+      }
+
+      setDifficultyActive(diffLevel) {
+        this.diffButtons.forEach(btn => {
+          if (btn.dataset.diff === diffLevel) {
+            btn.className = 'btn-diff px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-600/90 text-white shadow transition';
+          } else {
+            btn.className = 'btn-diff px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white transition';
+          }
+        });
+      }
+
+      setSoundUI(enabled) {
+        if (enabled) {
+          this.soundLabel.textContent = 'Audio ON';
+          this.soundIcon.classList.remove('text-slate-500');
+          this.soundIcon.classList.add('text-emerald-400');
+        } else {
+          this.soundLabel.textContent = 'Audio OFF';
+          this.soundIcon.classList.remove('text-emerald-400');
+          this.soundIcon.classList.add('text-slate-500');
+        }
+      }
+    }
+
+    /**
+     * CLASE 6: Game (Controlador Principal)
+     * Orquesta el estado global, interacción entre clases, turnos, eventos y persistencia de marcadores
+     */
+    class Game {
+      constructor() {
+        this.board = new Board();
+        this.ai = new AIPlayer('O', 'X');
+        this.sound = new SoundManager();
+        this.confetti = new ConfettiEffect('confetti-canvas');
+        this.ui = new UIController((index) => this.handleCellClick(index));
+
+        this.currentTurn = 'X';
+        this.isAIMode = true;
+        this.isGameOver = false;
+        this.isAIProcessing = false;
+
+        this.scores = {
+          X: 0,
+          O: 0,
+          draw: 0
+        };
+
+        this.initEventListeners();
+        this.restartRound();
+      }
+
+      initEventListeners() {
+        // Selector de modos
+        document.getElementById('btn-mode-ai').addEventListener('click', () => {
+          if (this.isAIMode) return;
+          this.isAIMode = true;
+          this.ui.setModeUI(true);
+          this.restartRound();
+        });
+
+        document.getElementById('btn-mode-pvp').addEventListener('click', () => {
+          if (!this.isAIMode) return;
+          this.isAIMode = false;
+          this.ui.setModeUI(false);
+          this.restartRound();
+        });
+
+        // Selector de dificultad
+        this.ui.diffButtons.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const diff = e.target.dataset.diff;
+            this.ai.setDifficulty(diff);
+            this.ui.setDifficultyActive(diff);
+            this.restartRound();
+          });
+        });
+
+        // Botón sonido
+        this.ui.btnSound.addEventListener('click', () => {
+          const isEnabled = this.sound.toggle();
+          this.ui.setSoundUI(isEnabled);
+        });
+
+        // Botón nueva ronda
+        document.getElementById('btn-restart-round').addEventListener('click', () => {
+          this.restartRound();
+        });
+
+        // Botón reiniciar puntos
+        document.getElementById('btn-reset-scores').addEventListener('click', () => {
+          this.resetScores();
+        });
+      }
+
+      handleCellClick(index) {
+        // Bloquear si terminó, celda ocupada o IA pensando
+        if (this.isGameOver || this.isAIProcessing) return;
+        if (!this.board.isValidMove(index)) return;
+
+        // Jugada del jugador activo
+        this.executeMove(index, this.currentTurn);
+
+        // Si es modo vs IA y no terminó el juego, turno del Bot
+        if (this.isAIMode && !this.isGameOver && this.currentTurn === 'O') {
+          this.triggerAIMove();
+        }
+      }
+
+      executeMove(index, symbol) {
+        this.board.setMove(index, symbol);
+        this.sound.playMove(symbol === 'X');
+        this.ui.renderBoard(this.board.cells);
+
+        const outcome = this.board.checkWinner();
+
+        if (outcome) {
+          this.handleGameOver(outcome);
+        } else {
+          // Cambiar turno
+          this.currentTurn = this.currentTurn === 'X' ? 'O' : 'X';
+          this.ui.updateTurn(this.currentTurn, this.isAIMode);
+        }
+      }
+
+      triggerAIMove() {
+        this.isAIProcessing = true;
+        this.ui.updateTurn(this.currentTurn, this.isAIMode, true);
+
+        // Pequeño retardo para dar sensación humana de pensamiento
+        setTimeout(() => {
+          if (this.isGameOver) {
+            this.isAIProcessing = false;
+            return;
+          }
+
+          const move = this.ai.computeMove(this.board);
+          if (move !== null && move !== undefined) {
+            this.executeMove(move, 'O');
+          }
+          this.isAIProcessing = false;
+        }, 380);
+      }
+
+      handleGameOver(outcome) {
+        this.isGameOver = true;
+
+        if (outcome.winner === 'DRAW') {
+          this.scores.draw++;
+          this.sound.playDraw();
+        } else {
+          this.scores[outcome.winner]++;
+          this.sound.playWin();
+          this.ui.highlightWinningCells(outcome.combo);
+          this.confetti.launch();
+        }
+
+        this.ui.updateScores(this.scores);
+        this.ui.showGameOverMessage(outcome, this.isAIMode);
+      }
+
+      restartRound() {
+        this.board.reset();
+        this.isGameOver = false;
+        this.isAIProcessing = false;
+        this.currentTurn = 'X';
+        this.ui.buildBoard();
+        this.ui.renderBoard(this.board.cells);
+        this.ui.updateTurn(this.currentTurn, this.isAIMode);
+      }
+
+      resetScores() {
+        this.scores = { X: 0, O: 0, draw: 0 };
+        this.ui.updateScores(this.scores);
+        this.restartRound();
+      }
+    }
+
+    // Inicialización del juego al cargar el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      window.ticTacToe = new Game();
+    });
+  </script>
+</body>
+</html>
